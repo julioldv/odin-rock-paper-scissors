@@ -3,6 +3,8 @@ const paperBtn = document.querySelector("#paperBtn");
 const scissorsBtn = document.querySelector("#scissorsBtn");
 const buttons = [rockBtn, paperBtn, scissorsBtn];
 
+const restartBtn = document.querySelector("#restartBtn");
+
 const score = document.querySelector("#score");
 const roundResult = document.querySelector("#roundResult");
 const winner = document.querySelector("#winner");
@@ -36,26 +38,31 @@ function playRound(humanChoice, computerChoice) {
 }
 
 function handleHumanChoice(choice) {
+  if(humanScore >=5 || computerScore >=5){return;}
   const computerChoice = getComputerChoice();
   roundResult.textContent = playRound(choice, computerChoice);
   updateScore();
 }
 
-rockBtn.addEventListener("click", (event) => {
+rockBtn.addEventListener("click", () => {
   handleHumanChoice("rock");
 });
 
-paperBtn.addEventListener("click", (event) => {
+paperBtn.addEventListener("click", () => {
   handleHumanChoice("paper");
 });
 
-scissorsBtn.addEventListener("click", (event) => {
+scissorsBtn.addEventListener("click", () => {
   handleHumanChoice("scissors");
 });
 
 
 function disableButtons() {
   buttons.forEach((btn) => (btn.disabled = true));
+}
+
+function enableButtons() {
+  buttons.forEach((btn) => (btn.disabled = false));
 }
 
 function updateScore() {
@@ -68,3 +75,13 @@ function updateScore() {
     disableButtons();
   }
 }
+
+restartBtn.addEventListener("click", ()=>{
+  humanScore = 0;
+  computerScore = 0;
+
+  roundResult.textContent = "Result of round will be shown here";
+  score.textContent = "Score will be shown here";
+  winner.textContent = "Winner will be shown here";
+  enableButtons();
+});
